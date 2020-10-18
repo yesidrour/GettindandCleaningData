@@ -1,0 +1,53 @@
+---
+title: "CodeBook"
+author: "Yesid Rodriguez"
+date: "10/18/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+source("script.R", local = knitr::knit_global())
+```
+
+## Description
+
+This document describes the process carried out to transform the test and train data sets included on the UCI HAR Dataset.
+
+The script starts by loading the packages needed to run the code. In this case the package dplyr is loaded.
+
+Next the following data sets are loaded on R, using the read.table function:
+
+  - features: List of all features.
+
+  - activity_labels: Links the class labels with their activity name
+
+  - subject_test: Each row identifies the subject in the test data set who performed the activity for each window sample. Its range is from 1 to 30. 
+
+  - subject_train: Each row identifies the subject in the train data set who performed the activity for each window sample. Its range is from 1 to 30. 
+
+  - X_test: Test set.
+
+  - Y_test: Test labels.
+
+  - X_train: Train set.
+
+  - Y_train: Train  labels
+  
+Following the data sets loading,the data cleaning starts by creating a new data frame "set". This contains the test and trains sets, merged.
+The description of each observation included in the features set is added as a name for the set variables. Only the means and standard deviations are parsed, so the data frame "set" is cleaned to reflect this. Then, each label in the Y_test and Y_train sets is matched with their respective activity names  from the activity_labels set. Next, a new set is created "activities", this corresponds to merging the Y_test and Y_train sets, but only the column names "Activity_name". Once, the activities set is ready it is merged to the "set" data frame. Therefore, "set" now has a new variable called "Activity_name", corresponding to the activity label for each measure. Now, a new set is created, it contains the subjects who performed the activities for the test and train sets, this is called "subjects". Finally, subjects is merged to "set" and now this data frame includes each subject who performed the study.
+
+After completing the "set" data frame, a new one is created, called "set_two". This is a summary by grouping "set" by "Activity_name" and "Subject". Now each variable (column) is the average for each activity performed by each subject.
+
+# Set Preview
+```{r set, echo=FALSE}
+head(set)
+```
+
+# Set_two Preview
+```{r set_two, echo=FALSE}
+head(set_two)
+```
